@@ -1,0 +1,165 @@
+/* BloomCare Baby Care – Month-by-month Mom & Baby guide */
+.baby-care-page {
+  --bc-ink: #303b3a;
+  --bc-muted: #74817d;
+  --bc-line: #e8e9e3;
+  --bc-sage: #6f8c80;
+  --bc-sage-dark: #526f63;
+  --bc-blush: #f8eeeb;
+  --bc-cream: #faf8f2;
+  --bc-lavender: #f1eff6;
+  color: var(--bc-ink);
+  background: #fff;
+  min-height: 100vh;
+  padding: 30px clamp(16px, 4vw, 56px) 56px;
+  font-family: inherit;
+}
+.baby-care-page * { box-sizing: border-box; }
+.bc-hero, .bc-progress-panel, .bc-month-section, .bc-detail-section, .bc-medical-note {
+  width: min(1180px, 100%);
+  margin-left: auto;
+  margin-right: auto;
+}
+.bc-hero {
+  min-height: 330px;
+  display: grid;
+  grid-template-columns: 1.35fr .65fr;
+  align-items: center;
+  gap: 30px;
+  padding: clamp(25px, 5vw, 54px);
+  border-radius: 28px;
+  overflow: hidden;
+  background: linear-gradient(115deg, #faf4f0 0%, #f5f2f5 55%, #edf2ed 100%);
+}
+.bc-eyebrow { display: block; color: #81918a; font-size: 10px; letter-spacing: .17em; font-weight: 800; }
+.bc-hero h1 { max-width: 700px; margin: 12px 0; font-size: clamp(31px, 4vw, 47px); line-height: 1.12; font-weight: 750; }
+.bc-hero h1 span { color: var(--bc-sage-dark); }
+.bc-hero-copy > p { max-width: 620px; color: var(--bc-muted); line-height: 1.75; font-size: 15px; }
+.bc-hero-meta { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 24px; color: #61766c; font-size: 12px; font-weight: 650; }
+.bc-hero-meta i { margin-right: 6px; }
+.bc-hero-art { min-height: 230px; display: grid; place-items: center; position: relative; }
+.bc-art-circle { width: 220px; height: 220px; position: relative; display: grid; place-items: center; border-radius: 50%; background: radial-gradient(circle at 45% 35%, #fff 0 22%, #eadfdc 23% 55%, #e2e9e1 56% 100%); box-shadow: 0 18px 45px rgba(70, 85, 75, .08); }
+.bc-art-mom { width: 105px; height: 125px; border-radius: 55% 55% 42% 42%; background: #b98578; color: #fff4ef; font-size: 82px; line-height: 1.35; text-align: center; transform: rotate(-8deg); }
+.bc-art-sun { position: absolute; top: 25px; right: 34px; color: #c59e6e; font-size: 28px; }
+.bc-art-leaf { position: absolute; color: #718c7d; font-size: 60px; }
+.leaf-one { left: 12px; bottom: 17px; transform: rotate(-40deg); }
+.leaf-two { right: 3px; bottom: 5px; transform: rotate(30deg) scaleX(-1); }
+.bc-art-caption { position: absolute; bottom: 0; color: #74847c; font-size: 11px; letter-spacing: .04em; }
+.bc-progress-panel { margin-top: 22px; padding: 23px 28px; border: 1px solid var(--bc-line); border-radius: 20px; display: flex; justify-content: space-between; align-items: center; gap: 25px; }
+.bc-progress-panel h2 { margin: 6px 0; font-size: 21px; }
+.bc-progress-panel p { margin: 0; color: var(--bc-muted); font-size: 13px; }
+.bc-progress-ring { width: 82px; height: 82px; flex: 0 0 82px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: conic-gradient(var(--bc-sage) var(--progress), #edf0ec 0); position: relative; }
+.bc-progress-ring::before { content: ""; position: absolute; inset: 7px; border-radius: 50%; background: white; }
+.bc-progress-ring strong, .bc-progress-ring span { position: relative; z-index: 1; }
+.bc-progress-ring strong { font-size: 18px; }
+.bc-progress-ring span { font-size: 9px; color: var(--bc-muted); }
+.bc-month-section { margin-top: 42px; }
+.bc-section-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 18px; margin-bottom: 18px; }
+.bc-section-heading h2, .bc-detail-header h2 { margin: 6px 0; font-size: 28px; }
+.bc-section-heading p, .bc-detail-header p { margin: 0; color: var(--bc-muted); font-size: 13px; }
+.bc-outline-btn, .bc-month-navigation button { border: 1px solid var(--bc-line); background: #fff; border-radius: 12px; padding: 11px 15px; color: var(--bc-sage-dark); font-weight: 700; cursor: pointer; }
+.bc-outline-btn i { margin-right: 6px; }
+.bc-date-form { padding: 17px; margin: 18px 0; border: 1px solid var(--bc-line); border-radius: 15px; background: var(--bc-cream); }
+.bc-date-form label { display: block; margin-bottom: 8px; font-size: 13px; font-weight: 700; }
+.bc-date-form > div { display: flex; gap: 9px; }
+.bc-date-form input { min-width: 0; border: 1px solid var(--bc-line); border-radius: 10px; padding: 10px 12px; background: #fff; font: inherit; }
+.bc-date-form small { display: block; margin-top: 9px; color: var(--bc-muted); line-height: 1.5; }
+.bc-primary-btn { border: 0 !important; background: var(--bc-sage-dark) !important; color: #fff !important; border-radius: 11px; padding: 11px 16px; font-weight: 750; cursor: pointer; }
+.bc-current-note { display: flex; align-items: center; gap: 10px; margin: 18px 0; padding: 13px 16px; border-radius: 13px; background: #f2f6f2; color: #62766c; font-size: 13px; line-height: 1.5; }
+.bc-current-note i { font-size: 18px; }
+.bc-month-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.bc-month-card { min-width: 0; min-height: 135px; border: 1px solid var(--bc-line); border-radius: 17px; background: #fff; padding: 16px; text-align: left; cursor: pointer; transition: border-color .18s, background .18s, transform .18s; }
+.bc-month-card:hover { transform: translateY(-2px); border-color: #b7c8bd; }
+.bc-month-card.selected { border: 2px solid var(--bc-sage); background: #f8faf7; padding: 15px; }
+.bc-month-card.current:not(.selected) { background: #fbf8f4; border-color: #d9c9bd; }
+.bc-month-number { display: block; color: #a2b1a7; font-size: 11px; letter-spacing: .15em; font-weight: 800; }
+.bc-month-title { display: block; margin-top: 5px; font-size: 18px; font-weight: 750; }
+.bc-month-card > small { display: block; margin-top: 2px; color: var(--bc-muted); }
+.bc-month-card-bottom { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 16px; font-size: 10px; }
+.bc-month-card-bottom b { color: var(--bc-sage-dark); font-weight: 700; }
+.bc-month-card-bottom em { color: var(--bc-muted); font-style: normal; white-space: nowrap; }
+.bc-month-card-bottom i { font-size: 9px; }
+.bc-detail-section { margin-top: 44px; }
+.bc-detail-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 18px; margin-bottom: 18px; }
+.bc-detail-header h2 span { color: #91a098; font-size: 15px; font-weight: 500; margin-left: 6px; }
+.bc-size-chip { max-width: 270px; padding: 12px 16px; border-radius: 14px; background: var(--bc-cream); }
+.bc-size-chip span, .bc-size-chip strong { display: block; }
+.bc-size-chip span { color: var(--bc-muted); font-size: 10px; }
+.bc-size-chip strong { margin-top: 4px; color: var(--bc-sage-dark); font-size: 13px; }
+.bc-two-panels { display: grid; grid-template-columns: .85fr 1.15fr; gap: 15px; align-items: start; }
+.bc-info-panel { min-width: 0; border: 1px solid var(--bc-line); border-radius: 20px; padding: 23px; }
+.bc-baby-panel { background: #f8f7fa; }
+.bc-mom-panel { background: #fcfaf7; }
+.bc-panel-heading { display: flex; gap: 12px; align-items: center; margin-bottom: 18px; }
+.bc-panel-icon { width: 43px; height: 43px; flex: 0 0 43px; border-radius: 14px; display: grid; place-items: center; background: #fff; color: var(--bc-sage-dark); font-size: 19px; }
+.bc-panel-heading span { color: #8c9992; font-size: 9px; letter-spacing: .13em; font-weight: 800; }
+.bc-panel-heading h3 { margin: 3px 0 0; font-size: 20px; }
+.bc-info-panel ul { padding-left: 19px; margin: 0; }
+.bc-info-panel li { padding-left: 3px; margin: 0 0 11px; color: #66736e; font-size: 13px; line-height: 1.65; }
+.bc-info-panel li::marker { color: #91a99a; }
+.bc-panel-footnote { margin-top: 18px; padding: 12px; border-radius: 11px; background: #fff; color: #7b8982; font-size: 11px; line-height: 1.5; }
+.bc-care-group { margin-top: 19px; }
+.bc-care-group h4 { margin: 0 0 9px; color: var(--bc-sage-dark); font-size: 14px; }
+.bc-care-group h4 i { margin-right: 7px; }
+.bc-care-group ul { padding-left: 18px; }
+.bc-care-group li { margin-bottom: 7px; font-size: 12px; }
+.bc-activities-panel, .bc-tips-panel { margin-top: 17px; padding: 23px; border: 1px solid var(--bc-line); border-radius: 20px; }
+.bc-activities-heading { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+.bc-activities-heading h3, .bc-tips-title h3 { margin: 5px 0; font-size: 21px; }
+.bc-activities-heading p { margin: 0; color: var(--bc-muted); font-size: 12px; }
+.bc-month-progress { width: 55px; height: 55px; flex: 0 0 55px; border-radius: 50%; display: grid; place-content: center; text-align: center; background: #eff4ef; }
+.bc-month-progress strong { font-size: 14px; }
+.bc-month-progress span { font-size: 8px; color: var(--bc-muted); }
+.bc-activity-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; margin-top: 18px; }
+.bc-activity { display: flex; align-items: center; gap: 10px; min-width: 0; padding: 12px; border: 1px solid var(--bc-line); border-radius: 12px; cursor: pointer; color: #5f6c66; font-size: 12px; line-height: 1.45; }
+.bc-activity input { position: absolute; opacity: 0; pointer-events: none; }
+.bc-custom-check { width: 19px; height: 19px; flex: 0 0 19px; display: grid; place-items: center; border: 1px solid #cbd5cd; border-radius: 6px; color: transparent; background: #fff; }
+.bc-activity.done { background: #f4f8f3; color: #829087; }
+.bc-activity.done > span:last-child { text-decoration: line-through; }
+.bc-activity.done .bc-custom-check { background: var(--bc-sage); border-color: var(--bc-sage); color: white; }
+.bc-activity-bar { height: 5px; margin-top: 17px; overflow: hidden; border-radius: 10px; background: #edf0eb; }
+.bc-activity-bar span { display: block; height: 100%; border-radius: inherit; background: var(--bc-sage); transition: width .2s; }
+.bc-tips-title { margin-bottom: 16px; }
+.bc-tip-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 11px; }
+.bc-tip-grid article { min-width: 0; padding: 17px; border-radius: 15px; background: #faf9f6; }
+.bc-tip-icon { width: 31px; height: 31px; display: grid; place-items: center; border-radius: 10px; background: #fff; color: var(--bc-sage-dark); }
+.bc-tip-grid h4 { margin: 10px 0 6px; font-size: 14px; }
+.bc-tip-grid p, .bc-tip-grid li { color: var(--bc-muted); font-size: 12px; line-height: 1.6; }
+.bc-tip-grid p { margin: 0; }
+.bc-tip-grid ul { padding-left: 17px; margin: 0; }
+.bc-bonding-highlight { display: flex; align-items: center; gap: 13px; margin-top: 13px; padding: 17px; border-radius: 15px; background: #f8efed; }
+.bc-bonding-highlight > span { width: 39px; height: 39px; flex: 0 0 39px; display: grid; place-items: center; border-radius: 50%; background: #fff; color: #b47d79; }
+.bc-bonding-highlight small { color: #9b7d78; font-size: 9px; letter-spacing: .12em; font-weight: 800; }
+.bc-bonding-highlight h4 { margin: 4px 0 0; font-size: 14px; line-height: 1.5; }
+.bc-month-navigation { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; }
+.bc-month-navigation button:disabled { opacity: .4; cursor: not-allowed; }
+.bc-medical-note { display: flex; align-items: flex-start; gap: 13px; margin-top: 22px; padding: 20px; border-radius: 17px; background: #f4f6f2; color: #62736a; }
+.bc-medical-note > i { font-size: 20px; margin-top: 2px; }
+.bc-medical-note h3 { margin: 0 0 5px; font-size: 15px; }
+.bc-medical-note p { margin: 0; font-size: 12px; line-height: 1.7; }
+@media (max-width: 850px) {
+  .bc-hero { grid-template-columns: 1fr .45fr; }
+  .bc-two-panels { grid-template-columns: 1fr; }
+}
+@media (max-width: 620px) {
+  .baby-care-page { padding: 15px 13px 35px; }
+  .bc-hero { grid-template-columns: 1fr; padding: 25px 20px; }
+  .bc-hero-art { min-height: 205px; }
+  .bc-art-circle { width: 180px; height: 180px; }
+  .bc-art-mom { width: 85px; height: 105px; font-size: 68px; }
+  .bc-progress-panel, .bc-section-heading, .bc-detail-header { align-items: flex-start; }
+  .bc-section-heading, .bc-detail-header { flex-direction: column; }
+  .bc-progress-panel { padding: 18px; }
+  .bc-month-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .bc-month-card { padding: 12px; min-height: 130px; }
+  .bc-month-card.selected { padding: 11px; }
+  .bc-month-card-bottom { align-items: flex-start; flex-direction: column; gap: 3px; }
+  .bc-detail-header h2 { font-size: 24px; }
+  .bc-detail-header h2 span { display: block; margin: 4px 0 0; }
+  .bc-info-panel, .bc-activities-panel, .bc-tips-panel { padding: 17px; }
+  .bc-activity-list, .bc-tip-grid { grid-template-columns: 1fr; }
+  .bc-month-navigation { flex-wrap: wrap; }
+  .bc-month-navigation button { flex: 1 1 42%; }
+  .bc-date-form > div { flex-direction: column; }
+  .bc-date-form input { width: 100%; }
+}

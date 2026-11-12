@@ -1,0 +1,754 @@
+.intimate-wellness-section {
+  padding: 90px 0;
+  background: linear-gradient(
+    180deg,
+    #fffafb 0%,
+    #faf6fb 50%,
+    #fff8f5 100%
+  );
+  color: #39263d;
+}
+
+.iw-heading {
+  max-width: 760px;
+  margin: 0 auto 55px;
+}
+
+.iw-eyebrow {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: #b95f79;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.iw-heading h2,
+.iw-detail-heading h2 {
+  margin-bottom: 14px;
+  color: #40263f;
+  font-weight: 700;
+}
+
+.iw-heading h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.iw-heading p,
+.iw-detail-heading p {
+  color: #766675;
+  line-height: 1.8;
+}
+
+/* Feature Cards */
+
+.iw-feature-card {
+  height: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #f0dfe7;
+  border-radius: 24px;
+  box-shadow: 0 12px 35px rgba(75, 45, 73, 0.07);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.iw-feature-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 20px 45px rgba(75, 45, 73, 0.12);
+}
+
+.iw-feature-image {
+  position: relative;
+  height: 260px;
+  overflow: hidden;
+}
+
+.iw-feature-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.iw-feature-card:hover .iw-feature-image img {
+  transform: scale(1.05);
+}
+
+.iw-icon {
+  position: absolute;
+  left: 22px;
+  bottom: -22px;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff1f5;
+  color: #b95f79;
+  border: 5px solid #ffffff;
+  border-radius: 50%;
+  font-size: 1.15rem;
+}
+
+.iw-feature-content {
+  padding: 42px 25px 26px;
+}
+
+.iw-feature-content h3 {
+  margin-bottom: 10px;
+  color: #422b43;
+  font-size: 1.35rem;
+}
+
+.iw-feature-content p {
+  min-height: 65px;
+  margin-bottom: 22px;
+  color: #766675;
+  line-height: 1.7;
+}
+
+.iw-explore-btn,
+.iw-read-btn,
+.iw-shop-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.iw-explore-btn {
+  padding: 10px 17px;
+  border-radius: 30px;
+  background: #f8e6ed;
+  color: #a84f6d;
+}
+
+.iw-explore-btn:hover {
+  background: #b95f79;
+  color: #ffffff;
+}
+
+/* Detail Pages */
+
+.iw-detail-page {
+  padding-top: 10px;
+  scroll-margin-top: 80px;
+}
+
+.iw-detail-heading {
+  max-width: 780px;
+  margin: 25px auto 45px;
+  text-align: center;
+}
+
+.iw-detail-heading h2 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+}
+
+.iw-back-btn,
+.iw-article-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 30px;
+  padding: 10px 17px;
+  border: 1px solid #ead2dc;
+  border-radius: 30px;
+  background: #ffffff;
+  color: #9f526c;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.iw-back-btn:hover,
+.iw-article-back:hover {
+  background: #b95f79;
+  color: #ffffff;
+  border-color: #b95f79;
+}
+
+/* Hygiene */
+
+.iw-note,
+.iw-brand-note,
+.iw-doctor-note,
+.iw-warning-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 28px;
+  padding: 20px 22px;
+  border-radius: 18px;
+}
+
+.iw-note {
+  background: #fff1f5;
+  border: 1px solid #f2d6df;
+}
+
+.iw-brand-note {
+  background: #f5f1fa;
+  border: 1px solid #e4dcef;
+}
+
+.iw-note i,
+.iw-brand-note i {
+  margin-top: 2px;
+  color: #b95f79;
+  font-size: 1.2rem;
+}
+
+.iw-note p,
+.iw-brand-note p {
+  margin: 0;
+  color: #624e60;
+  line-height: 1.7;
+}
+
+.iw-guide-card {
+  height: 100%;
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #f0dfe7;
+  border-radius: 22px;
+  box-shadow: 0 10px 30px rgba(75, 45, 73, 0.06);
+}
+
+.iw-guide-card.pregnancy-guide {
+  background: linear-gradient(
+    145deg,
+    #ffffff,
+    #faf5fc
+  );
+}
+
+.iw-guide-title {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.iw-round-icon {
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #f8e6ed;
+  color: #b95f79;
+}
+
+.iw-guide-title span {
+  color: #b95f79;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.iw-guide-title h3 {
+  margin: 2px 0 0;
+  color: #422b43;
+  font-size: 1.3rem;
+}
+
+.iw-guide-intro {
+  color: #766675;
+}
+
+.iw-guide-list {
+  margin-top: 22px;
+}
+
+.iw-guide-item {
+  display: flex;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid #f4e8ed;
+}
+
+.iw-guide-item:last-child {
+  border-bottom: 0;
+}
+
+.iw-guide-item span {
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  border-radius: 50%;
+  background: #f8e6ed;
+  color: #b95f79;
+  font-size: 0.75rem;
+}
+
+.iw-guide-item p {
+  margin: 0;
+  color: #665765;
+  line-height: 1.65;
+}
+
+.iw-doctor-note {
+  margin-top: 25px;
+  background: #f4f0f9;
+}
+
+.iw-doctor-note > i {
+  color: #8d6a9c;
+  font-size: 1.5rem;
+}
+
+.iw-doctor-note h4 {
+  margin-bottom: 7px;
+  color: #422b43;
+  font-size: 1rem;
+}
+
+.iw-doctor-note p {
+  margin: 0;
+  color: #6c5c6c;
+  line-height: 1.7;
+}
+
+/* Period Products */
+
+.iw-product-card {
+  height: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #f0dfe7;
+  border-radius: 22px;
+  box-shadow: 0 10px 30px rgba(75, 45, 73, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.iw-product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 38px rgba(75, 45, 73, 0.11);
+}
+
+.iw-product-image {
+  height: 210px;
+  overflow: hidden;
+  background: #f8f3f5;
+}
+
+.iw-product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.iw-product-card:hover .iw-product-image img {
+  transform: scale(1.04);
+}
+
+.iw-product-content {
+  padding: 23px;
+}
+
+.iw-product-icon {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  background: #fff0f4;
+  color: #b95f79;
+}
+
+.iw-product-content h3 {
+  color: #422b43;
+  font-size: 1.25rem;
+}
+
+.iw-product-content > p {
+  color: #766675;
+  line-height: 1.65;
+}
+
+.iw-product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 15px;
+  padding-top: 13px;
+  border-top: 1px solid #f3e7ec;
+}
+
+.iw-product-info strong {
+  color: #4a344a;
+  font-size: 0.85rem;
+}
+
+.iw-product-info span {
+  color: #776878;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.iw-shop-btn {
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+  padding: 11px 15px;
+  border-radius: 30px;
+  background: #b95f79;
+  color: #ffffff;
+}
+
+.iw-shop-btn:hover {
+  background: #93475f;
+  color: #ffffff;
+}
+
+.iw-comparison {
+  margin-top: 55px;
+  padding: 30px;
+  background: #ffffff;
+  border: 1px solid #f0dfe7;
+  border-radius: 22px;
+  box-shadow: 0 10px 30px rgba(75, 45, 73, 0.05);
+}
+
+.iw-comparison-heading {
+  margin-bottom: 25px;
+}
+
+.iw-comparison-heading h3 {
+  margin: 5px 0 8px;
+  color: #422b43;
+}
+
+.iw-comparison-heading p {
+  margin: 0;
+  color: #766675;
+}
+
+.iw-table {
+  margin: 0;
+  vertical-align: middle;
+}
+
+.iw-table th {
+  padding: 15px;
+  background: #faf2f6;
+  color: #4a344a;
+  border-color: #f0e0e7;
+}
+
+.iw-table td {
+  padding: 15px;
+  color: #6e5e6c;
+  border-color: #f1e5ea;
+}
+
+/* Personal Care */
+
+.iw-care-card {
+  height: 100%;
+  display: flex;
+  gap: 18px;
+  padding: 27px;
+  background: #ffffff;
+  border: 1px solid #f0dfe7;
+  border-radius: 21px;
+  box-shadow: 0 10px 28px rgba(75, 45, 73, 0.06);
+}
+
+.iw-care-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: #f7e9ef;
+  color: #b95f79;
+  font-size: 1.2rem;
+}
+
+.iw-care-card h3 {
+  margin-bottom: 13px;
+  color: #422b43;
+  font-size: 1.2rem;
+}
+
+.iw-care-card ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.iw-care-card li {
+  display: flex;
+  gap: 9px;
+  margin-bottom: 10px;
+  color: #716170;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.iw-care-card li i {
+  flex-shrink: 0;
+  color: #b95f79;
+}
+
+.iw-warning-card {
+  margin-top: 30px;
+  background: #fff5f0;
+  border: 1px solid #f4ddd3;
+}
+
+.iw-warning-icon {
+  width: 45px;
+  height: 45px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #f9e2d8;
+  color: #b76d58;
+}
+
+.iw-warning-card h3 {
+  margin-bottom: 7px;
+  color: #55353a;
+  font-size: 1.05rem;
+}
+
+.iw-warning-card p {
+  margin: 0;
+  color: #765d5c;
+  line-height: 1.7;
+}
+
+/* Articles */
+
+.iw-article-card {
+  height: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #f0dfe7;
+  border-radius: 21px;
+  box-shadow: 0 10px 30px rgba(75, 45, 73, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.iw-article-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 38px rgba(75, 45, 73, 0.1);
+}
+
+.iw-article-image {
+  position: relative;
+  height: 205px;
+}
+
+.iw-article-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.iw-article-image span {
+  position: absolute;
+  left: 15px;
+  bottom: 15px;
+  padding: 6px 10px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.93);
+  color: #9f526c;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.iw-article-content {
+  padding: 22px;
+}
+
+.iw-article-content h3 {
+  color: #422b43;
+  font-size: 1.15rem;
+  line-height: 1.4;
+}
+
+.iw-article-content p {
+  min-height: 55px;
+  color: #766675;
+  line-height: 1.65;
+}
+
+.iw-read-btn {
+  padding: 0;
+  background: transparent;
+  color: #a84f6d;
+}
+
+.iw-read-btn:hover {
+  color: #7e3e56;
+  gap: 12px;
+}
+
+.iw-full-article {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px;
+  background: #ffffff;
+  border: 1px solid #f0dfe7;
+  border-radius: 24px;
+  box-shadow: 0 12px 35px rgba(75, 45, 73, 0.07);
+}
+
+.iw-full-article > img {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  border-radius: 18px;
+  margin-bottom: 22px;
+}
+
+.iw-article-category {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 6px 10px;
+  border-radius: 20px;
+  background: #f8e6ed;
+  color: #a84f6d;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.iw-full-article h2 {
+  margin-bottom: 12px;
+  color: #422b43;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+}
+
+.iw-article-intro {
+  color: #806e7d;
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.iw-article-body {
+  margin-top: 25px;
+  padding-top: 25px;
+  border-top: 1px solid #f0e3e9;
+}
+
+.iw-article-body p {
+  color: #625360;
+  line-height: 1.9;
+}
+
+.iw-article-disclaimer {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 25px;
+  padding: 15px;
+  border-radius: 13px;
+  background: #f7f3fa;
+  color: #6e5f72;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.iw-article-disclaimer i {
+  color: #8c6a9a;
+}
+
+/* Responsive */
+
+@media (max-width: 991px) {
+  .intimate-wellness-section {
+    padding: 70px 0;
+  }
+
+  .iw-feature-image {
+    height: 230px;
+  }
+}
+
+@media (max-width: 767px) {
+  .intimate-wellness-section {
+    padding: 55px 0;
+  }
+
+  .iw-heading {
+    margin-bottom: 35px;
+  }
+
+  .iw-feature-image {
+    height: 210px;
+  }
+
+  .iw-feature-content p {
+    min-height: auto;
+  }
+
+  .iw-guide-card,
+  .iw-care-card,
+  .iw-comparison {
+    padding: 21px;
+  }
+
+  .iw-full-article {
+    padding: 20px;
+  }
+
+  .iw-full-article > img {
+    height: 240px;
+  }
+}
+
+@media (max-width: 575px) {
+  .iw-feature-card {
+    border-radius: 18px;
+  }
+
+  .iw-feature-image {
+    height: 190px;
+  }
+
+  .iw-feature-content {
+    padding: 38px 20px 22px;
+  }
+
+  .iw-product-image {
+    height: 190px;
+  }
+
+  .iw-care-card {
+    flex-direction: column;
+  }
+
+  .iw-note,
+  .iw-brand-note,
+  .iw-doctor-note,
+  .iw-warning-card {
+    padding: 17px;
+  }
+
+  .iw-full-article > img {
+    height: 190px;
+  }
+
+  .iw-table {
+    min-width: 650px;
+  }
+}

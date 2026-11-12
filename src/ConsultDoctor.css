@@ -1,0 +1,107 @@
+.bc-consult-page{--bc-rose:#c55482;--bc-dark:#a83f6a;--bc-blush:#fce8f0;--bc-lav:#eee7fb;--bc-peach:#fff1e8;--bc-ink:#28213d;--bc-muted:#70697d;--bc-line:#eadde4;background:#fffaf8;color:var(--bc-ink);font-family:'DM Sans',sans-serif;min-height:100vh}
+.bc-consult-page *{box-sizing:border-box}
+.bc-consult-page h1,.bc-consult-page h2,.bc-consult-page h3{font-family:'Playfair Display',serif;color:var(--bc-ink)}
+.bc-consult-hero{position:relative;overflow:hidden;padding:75px max(6vw,24px) 65px;background:linear-gradient(115deg,#fff2f7,#f3eafa 65%,#fff0e8)}
+.bc-hero-content{position:relative;z-index:1;max-width:850px;margin:auto;text-align:center}
+.bc-consult-hero h1{font-size:clamp(2.5rem,5vw,4.2rem);line-height:1.1;margin:10px 0 18px}
+.bc-consult-hero p{max-width:650px;margin:0 auto 24px;color:var(--bc-muted);line-height:1.7}
+.bc-hero-orb{position:absolute;width:300px;height:300px;border-radius:50%;background:#f4cddd;opacity:.35;right:-90px;top:-130px}
+.bc-eyebrow{font-size:.7rem;font-weight:800;letter-spacing:.16em;color:var(--bc-rose)}
+.bc-hero-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.bc-btn{border:0;border-radius:999px;padding:11px 19px;font-size:.82rem;font-weight:700;cursor:pointer;transition:.2s ease}
+.bc-btn:hover{transform:translateY(-2px)}
+.bc-btn-primary{background:var(--bc-rose);color:#fff}
+.bc-btn-primary:hover{background:var(--bc-dark);color:#fff}
+.bc-btn-light{background:#fff;color:var(--bc-dark);border:1px solid #e9cbd8}
+.bc-hero-disclaimer{font-size:.72rem;color:#8b7786;margin-top:20px}
+.bc-subnav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--bc-line);display:flex;justify-content:center;gap:10px;padding:12px;flex-wrap:wrap}
+.bc-subnav button{border:0;background:transparent;color:var(--bc-muted);font-size:.8rem;font-weight:700;padding:9px 14px;border-radius:999px}
+.bc-subnav button:hover,.bc-subnav button.active{background:var(--bc-blush);color:var(--bc-dark)}
+.bc-section{max-width:1180px;margin:auto;padding:65px 24px}
+.bc-section-heading{text-align:center;max-width:760px;margin:0 auto 30px}
+.bc-section-heading h2{font-size:clamp(1.9rem,3vw,2.6rem);margin:9px 0}
+.bc-section-heading p{color:var(--bc-muted);line-height:1.65}
+.bc-filter-panel{display:grid;grid-template-columns:2fr repeat(5,1fr);gap:10px;background:#fff;padding:16px;border:1px solid var(--bc-line);border-radius:20px;box-shadow:0 8px 25px #53243d0b}
+.bc-filter-panel input,.bc-filter-panel select,.bc-booking-form input,.bc-booking-form select,.bc-booking-form textarea,.bc-nearby-search input{width:100%;min-width:0;border:1px solid var(--bc-line);border-radius:11px;background:#fff;padding:11px 12px;color:var(--bc-ink);font:inherit;font-size:.78rem;outline:none}
+.bc-filter-panel input:focus,.bc-filter-panel select:focus,.bc-booking-form input:focus,.bc-booking-form select:focus,.bc-booking-form textarea:focus{border-color:#d784a4;box-shadow:0 0 0 3px #c5548215}
+.bc-results-line{font-size:.75rem;color:var(--bc-muted);margin:18px 2px}
+.bc-doctor-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.bc-doctor-card{background:#fff;border:1px solid var(--bc-line);border-radius:20px;overflow:hidden;box-shadow:0 10px 28px #542b400c;transition:.22s ease}
+.bc-doctor-card:hover{transform:translateY(-5px);box-shadow:0 17px 35px #542b4018}
+.bc-doctor-photo-wrap{height:190px;position:relative;background:var(--bc-lav)}
+.bc-doctor-photo{width:100%;height:100%;object-fit:cover;object-position:center 30%}
+.bc-demo-tag{display:inline-block;background:#fff0f5;color:var(--bc-dark);border:1px solid #f0cfdd;border-radius:999px;padding:5px 9px;font-size:.63rem;font-weight:800}
+.bc-doctor-photo-wrap .bc-demo-tag{position:absolute;left:13px;top:13px}
+.bc-doctor-card-body{padding:18px}
+.bc-specialty{font-size:.7rem;color:var(--bc-rose);font-weight:800}
+.bc-doctor-card h3{font-size:1.25rem;margin:6px 0}
+.bc-qualification{font-size:.72rem;min-height:36px;color:var(--bc-muted);line-height:1.5}
+.bc-doctor-facts{display:grid;gap:8px;margin:13px 0}
+.bc-doctor-facts span{font-size:.7rem;color:var(--bc-muted);display:flex;gap:8px}
+.bc-doctor-facts i{color:var(--bc-rose)}
+.bc-doctor-intro{font-size:.75rem;line-height:1.55;min-height:48px}
+.bc-card-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #f1e7ec;padding:12px 0;font-size:.9rem}
+.bc-card-bottom small{font-size:.62rem;color:var(--bc-muted);font-weight:400}
+.bc-availability{font-size:.63rem;color:#7a6a7a;background:#f5f0f7;padding:5px 8px;border-radius:99px}
+.bc-card-actions{display:flex;gap:8px}
+.bc-card-actions .bc-btn{flex:1;padding:10px 8px;font-size:.69rem}
+.bc-empty{padding:28px;text-align:center;background:#fff;border:1px dashed #dfc6d2;border-radius:16px;color:var(--bc-muted);font-size:.85rem}
+.bc-nearby{background:#fff6fa;max-width:none;padding-left:max(calc((100% - 1132px)/2),24px);padding-right:max(calc((100% - 1132px)/2),24px)}
+.bc-nearby-search{max-width:760px;margin:0 auto 25px;display:flex;align-items:center;gap:10px;background:#fff;padding:10px 13px;border:1px solid var(--bc-line);border-radius:16px}
+.bc-nearby-search>i{color:var(--bc-rose)}
+.bc-nearby-search input{border:0;box-shadow:none!important}
+.bc-nearby-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.bc-nearby-card{background:#fff;border:1px solid var(--bc-line);border-radius:17px;padding:18px}
+.bc-nearby-card h3{font-size:1.1rem;margin:12px 0 7px}
+.bc-nearby-card p,.bc-nearby-card small{font-size:.75rem;color:var(--bc-muted);line-height:1.5}
+.bc-map-link{display:inline-block;color:var(--bc-rose);font-size:.73rem;font-weight:700;margin-top:12px}
+.bc-profile-layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(260px,.8fr);gap:25px;margin-top:20px}
+.bc-profile-main,.bc-profile-aside{background:#fff;border:1px solid var(--bc-line);border-radius:20px;padding:25px}
+.bc-profile-top{display:flex;gap:22px;align-items:center;margin-bottom:30px}
+.bc-profile-top img{width:150px;height:160px;object-fit:cover;border-radius:18px}
+.bc-profile-top h2{font-size:1.8rem;margin:10px 0 4px}
+.bc-profile-top p{margin:5px 0;font-size:.82rem}
+.bc-profile-main h3,.bc-profile-aside h3{font-size:1.15rem;margin:24px 0 10px}
+.bc-profile-main>p,.bc-profile-aside p{font-size:.8rem;color:var(--bc-muted);line-height:1.65}
+.bc-chip-list{display:flex;gap:8px;flex-wrap:wrap}
+.bc-chip-list span{background:#f8edf5;color:#76566f;border-radius:99px;padding:8px 12px;font-size:.7rem}
+.bc-review{background:#fff8fb;border-radius:14px;padding:15px;font-size:.78rem;color:var(--bc-muted)}
+.bc-review strong{display:block;color:var(--bc-ink);margin-bottom:5px}
+.bc-stars{color:#d79a42;letter-spacing:2px;margin-bottom:5px}
+.bc-profile-aside{align-self:start;background:linear-gradient(160deg,#fff,#fff5f8)}
+.bc-profile-aside p i{color:var(--bc-rose);margin-right:7px}
+.bc-full{width:100%;margin-top:10px}
+.bc-demo-note{background:#fff6e9;color:#84643e;border:1px solid #f1dfc5;border-radius:12px;padding:12px;font-size:.72rem;line-height:1.55;margin:16px 0}
+.bc-back-link{border:0;background:transparent;color:var(--bc-rose);font-size:.8rem;font-weight:700;margin-bottom:18px}
+.bc-form-shell{max-width:800px;margin:auto;background:#fff;border:1px solid var(--bc-line);border-radius:22px;padding:28px;box-shadow:0 12px 35px #542b400c}
+.bc-booking-form label{display:block;font-size:.75rem;font-weight:700;margin:12px 0 6px}
+.bc-method-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.bc-method{border:1px solid var(--bc-line);background:#fff;border-radius:13px;padding:15px;color:var(--bc-ink);font-weight:700;font-size:.78rem}
+.bc-method i{display:block;color:var(--bc-rose);font-size:1.3rem;margin-bottom:6px}
+.bc-method.active{background:#fff1f6;border-color:#d98eac;color:var(--bc-dark)}
+.bc-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px 15px}
+.bc-wide{grid-column:1/-1}
+.bc-booking-form textarea{resize:vertical}
+.bc-fee-row{display:flex;justify-content:space-between;align-items:center;background:#fff6fa;border-radius:12px;padding:14px;margin:18px 0;font-size:.8rem}
+.bc-error{color:#b42345;font-size:.78rem}
+.bc-smallprint{font-size:.68rem;color:#897d89;line-height:1.55;margin-top:14px}
+.bc-confirmation{max-width:650px;margin:auto;text-align:center;background:#fff;border:1px solid var(--bc-line);border-radius:22px;padding:35px}
+.bc-confirm-icon{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:#e8f5ed;color:#43835b;font-size:1.8rem;margin:0 auto 15px}
+.bc-confirmation h2{margin:10px 0}
+.bc-confirm-details{display:grid;gap:7px;background:#fff6fa;padding:16px;border-radius:13px;margin:20px 0;font-size:.78rem}
+.bc-appointments-list{display:grid;gap:13px}
+.bc-appointment-card{display:flex;gap:16px;align-items:center;background:#fff;border:1px solid var(--bc-line);border-radius:17px;padding:15px}
+.bc-appointment-card>img{width:85px;height:85px;object-fit:cover;border-radius:13px}
+.bc-appointment-info{flex:1}
+.bc-appointment-info h3{font-size:1.1rem;margin:0 0 5px}
+.bc-appointment-info p,.bc-appointment-info small{display:block;font-size:.73rem;color:var(--bc-muted);margin:4px 0}
+.bc-status{display:inline-block;background:#f0eaf7;color:#70547d;border-radius:99px;padding:5px 8px;font-size:.63rem;font-weight:700}
+.bc-text-button{display:block;border:0;background:none;color:var(--bc-rose);font-size:.72rem;font-weight:700;padding:6px 0}
+.bc-appointment-details{background:#fff8fb;border-radius:10px;padding:8px 12px;margin-top:8px}
+.bc-appointment-details p{margin:4px 0}
+.bc-cancel{font-size:.7rem}
+.bc-consult-footer{text-align:center;padding:24px;background:#633d59;color:#f4e7ee}
+.bc-consult-footer p{max-width:850px;margin:auto;color:#f4e7ee;font-size:.7rem;line-height:1.6}
+@media(max-width:1050px){.bc-filter-panel{grid-template-columns:repeat(3,1fr)}.bc-doctor-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.bc-section{padding:45px 17px}.bc-doctor-grid,.bc-nearby-grid{grid-template-columns:1fr}.bc-filter-panel{grid-template-columns:1fr 1fr}.bc-filter-panel input{grid-column:1/-1}.bc-profile-layout{grid-template-columns:1fr}.bc-profile-top{align-items:flex-start}.bc-profile-top img{width:105px;height:120px}.bc-form-shell{padding:19px}.bc-appointment-card{align-items:flex-start;flex-wrap:wrap}.bc-cancel{margin-left:100px}.bc-subnav{justify-content:flex-start}.bc-subnav button{font-size:.72rem}.bc-nearby-search{flex-wrap:wrap}.bc-nearby-search input{flex:1}.bc-nearby-search .bc-btn{width:100%}}
+@media(max-width:460px){.bc-filter-panel,.bc-form-grid{grid-template-columns:1fr}.bc-wide{grid-column:auto}.bc-method-options{grid-template-columns:1fr}.bc-profile-top{display:block}.bc-profile-top img{margin-bottom:15px}.bc-card-actions{flex-direction:column}.bc-hero-actions .bc-btn{width:100%}}

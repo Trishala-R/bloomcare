@@ -199,21 +199,32 @@ export default function Pregnancy() {
         <button className="outline-btn" onClick={() => setSetupOpen(true)}>Edit pregnancy details</button>
       </header>
 
-      <nav className="pregnancy-nav">
-        {[
-          ["home", "bi-house-heart", "Pregnancy Home"],
-  ["journey", "bi-heart-pulse", "My Pregnancy"],
-  ["baby", "bi-emoji-smile", "Baby"],
-  ["symptoms", "bi-clipboard2-pulse", "Symptoms"],
-  ["movement", "bi-activity", "Kick Counter"],
-  ["contractions", "bi-clock-history", "Contractions"],
-  ["appointments", "bi-calendar-heart", "Appointments"],
-  ["journal", "bi-journal-text", "Journal"],
-  ["checklist", "bi-check2-square", "Checklist"],
-  ["birth", "bi-balloon-heart", "Birth Plan"],
-  ["articles", "bi-book-half", "Articles"]
-        ].map(([id, icon, label]) => <button key={id} className={activeTab === id ? "active" : ""} onClick={() => setActiveTab(id)}><span>{icon}</span>{label}</button>)}
-      </nav>
+      
+<nav className="pregnancy-nav">
+  {[
+    ["home", "bi-house-heart", "Pregnancy Home"],
+    ["journey", "bi-heart-pulse", "My Pregnancy"],
+    ["baby", "bi-emoji-smile", "Baby"],
+    ["symptoms", "bi-clipboard2-pulse", "Symptoms"],
+    ["movement", "bi-activity", "Kick Counter"],
+    ["contractions", "bi-clock-history", "Contractions"],
+    ["appointments", "bi-calendar-heart", "Appointments"],
+    ["journal", "bi-journal-text", "Journal"],
+    ["checklist", "bi-check2-square", "Checklist"],
+    ["birth", "bi-balloon-heart", "Birth Plan"],
+    ["articles", "bi-book-half", "Articles"]
+  ].map(([id, icon, label]) => (
+    <button
+      key={id}
+      className={activeTab === id ? "active" : ""}
+      onClick={() => setActiveTab(id)}
+    >
+      <i className={`bi ${icon}`}></i>
+      <span>{label}</span>
+    </button>
+  ))}
+</nav>
+
 
       {activeTab === "home" && <>
         <section className="hero-grid">

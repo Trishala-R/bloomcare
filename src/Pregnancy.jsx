@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 
 const STORAGE_KEY = "bloomcare_pregnancy_v1";
 const DAY = 24 * 60 * 60 * 1000;
@@ -50,6 +50,20 @@ const defaultState = {
 };
 
 const symptoms = ["Nausea", "Fatigue", "Headache", "Back pain", "Cramps", "Heartburn", "Swelling", "Breast tenderness", "Constipation", "Mood changes", "Sleep problems"];
+const pregnancySectionOrder = [
+  ["home", "Pregnancy Home"],
+  ["journey", "My Pregnancy"],
+  ["baby", "Baby"],
+  ["symptoms", "Symptoms"],
+  ["movement", "Kick Counter"],
+  ["contractions", "Contractions"],
+  ["appointments", "Appointments"],
+  ["journal", "Journal"],
+  ["checklist", "Checklist"],
+  ["birth", "Birth Plan"],
+  ["articles", "Articles"],
+];
+
 const checklistItems = {
   "During pregnancy": ["Keep prenatal appointments", "Prepare questions for your healthcare provider", "Organize important test reports", "Review nutrition and self-care guidance"],
   "Hospital preparation": ["Prepare hospital bag", "Keep important documents together", "Pack comfortable clothes", "Add personal essentials"],
@@ -82,6 +96,9 @@ function calculatePregnancy(lmp, dueDate, knownWeek) {
 export default function Pregnancy() {
   const [state, setState] = useState(loadState);
   const [activeTab, setActiveTab] = useState("home");
+  const pregnancyNavRef = useRef(null);
+  const [navCanPrev, setNavCanPrev] = useState(false);
+  const [navCanNext, setNavCanNext] = useState(false);
   const [week, setWeek] = useState(1);
   const [setupOpen, setSetupOpen] = useState(false);
   const [symptomOpen, setSymptomOpen] = useState(false);
@@ -99,6 +116,44 @@ export default function Pregnancy() {
   const [journal, setJournal] = useState({ title: "", text: "" });
 
   useEffect(() => localStorage.setItem(STORAGE_KEY, JSON.stringify(state)), [state]);
+
+  useEffect(() => {
+    const nav = pregnancyNavRef.current;
+    if (!nav) return undefined;
+
+    const updateNavButtons = () => {
+      setNavCanPrev(nav.scrollLeft > 2);
+      setNavCanNext(nav.scrollLeft + nav.clientWidth < nav.scrollWidth - 2);
+    };
+
+    updateNavButtons();
+    nav.addEventListener("scroll", updateNavButtons, { passive: true });
+    window.addEventListener("resize", updateNavButtons);
+
+    return () => {
+      nav.removeEventListener("scroll", updateNavButtons);
+      window.removeEventListener("resize", updateNavButtons);
+    };
+  }, []);
+
+  const slidePregnancyNav = (direction) => {
+    const nav = pregnancyNavRef.current;
+    if (!nav) return;
+
+    nav.scrollBy({
+      left: direction * nav.clientWidth * 0.7,
+      behavior: "smooth",
+    });
+  };
+
+  const activeSectionIndex = pregnancySectionOrder.findIndex(([id]) => id === activeTab);
+  const activeSectionLabel = pregnancySectionOrder[activeSectionIndex]?.[1] || "Pregnancy Home";
+
+  const changePregnancySection = (direction) => {
+    const nextIndex = activeSectionIndex + direction;
+    if (nextIndex < 0 || nextIndex >= pregnancySectionOrder.length) return;
+    setActiveTab(pregnancySectionOrder[nextIndex][0]);
+  };
 
   const pregnancy = useMemo(() => calculatePregnancy(state.profile.lmp, state.profile.dueDate, state.profile.knownWeek), [state.profile]);
   const currentWeek = pregnancy.week;
@@ -200,31 +255,81 @@ export default function Pregnancy() {
       </header>
 
       
-<nav className="pregnancy-nav">
-  {[
-    ["home", "bi-house-heart", "Pregnancy Home"],
-    ["journey", "bi-heart-pulse", "My Pregnancy"],
-    ["baby", "bi-emoji-smile", "Baby"],
-    ["symptoms", "bi-clipboard2-pulse", "Symptoms"],
-    ["movement", "bi-activity", "Kick Counter"],
-    ["contractions", "bi-clock-history", "Contractions"],
-    ["appointments", "bi-calendar-heart", "Appointments"],
-    ["journal", "bi-journal-text", "Journal"],
-    ["checklist", "bi-check2-square", "Checklist"],
-    ["birth", "bi-balloon-heart", "Birth Plan"],
-    ["articles", "bi-book-half", "Articles"]
-  ].map(([id, icon, label]) => (
-    <button
-      key={id}
-      className={activeTab === id ? "active" : ""}
-      onClick={() => setActiveTab(id)}
-    >
-      <i className={`bi ${icon}`}></i>
-      <span>{label}</span>
-    </button>
-  ))}
-</nav>
+<div className="pregnancy-nav-shell">
+  <button
+    type="button"
+    className="pregnancy-nav-arrow"
+    onClick={() => slidePregnancyNav(-1)}
+    disabled={!navCanPrev}
+    aria-label="Previous navigation items"
+  >
+    <i className="bi bi-chevron-left" aria-hidden="true"></i>
+  </button>
 
+  <nav className="pregnancy-nav" ref={pregnancyNavRef} aria-label="Pregnancy sections">
+    {[
+      ["home", "bi-house-heart", "Pregnancy Home"],
+      ["journey", "bi-heart-pulse", "My Pregnancy"],
+      ["baby", "bi-emoji-smile", "Baby"],
+      ["symptoms", "bi-clipboard2-pulse", "Symptoms"],
+      ["movement", "bi-activity", "Kick Counter"],
+      ["contractions", "bi-clock-history", "Contractions"],
+      ["appointments", "bi-calendar-heart", "Appointments"],
+      ["journal", "bi-journal-text", "Journal"],
+      ["checklist", "bi-check2-square", "Checklist"],
+      ["birth", "bi-balloon-heart", "Birth Plan"],
+      ["articles", "bi-book-half", "Articles"]
+    ].map(([id, icon, label]) => (
+      <button
+        type="button"
+        key={id}
+        className={activeTab === id ? "active" : ""}
+        onClick={() => setActiveTab(id)}
+      >
+        <i className={`bi ${icon}`} aria-hidden="true"></i>
+        <span>{label}</span>
+      </button>
+    ))}
+  </nav>
+
+  <button
+    type="button"
+    className="pregnancy-nav-arrow"
+    onClick={() => slidePregnancyNav(1)}
+    disabled={!navCanNext}
+    aria-label="Next navigation items"
+  >
+    <i className="bi bi-chevron-right" aria-hidden="true"></i>
+  </button>
+</div>
+
+      <div className="pregnancy-section-switcher" aria-label="Navigate between pregnancy sections">
+        <button
+          type="button"
+          className="pregnancy-section-switcher-btn"
+          onClick={() => changePregnancySection(-1)}
+          disabled={activeSectionIndex <= 0}
+          aria-label="Go to previous section"
+        >
+          <i className="bi bi-chevron-left" aria-hidden="true"></i>
+          <span>Previous</span>
+        </button>
+
+        <span className="pregnancy-section-current" aria-live="polite">
+          {activeSectionLabel}
+        </span>
+
+        <button
+          type="button"
+          className="pregnancy-section-switcher-btn"
+          onClick={() => changePregnancySection(1)}
+          disabled={activeSectionIndex >= pregnancySectionOrder.length - 1}
+          aria-label="Go to next section"
+        >
+          <span>Next</span>
+          <i className="bi bi-chevron-right" aria-hidden="true"></i>
+        </button>
+      </div>
 
       {activeTab === "home" && <>
         <section className="hero-grid">
@@ -321,7 +426,22 @@ function Empty({ text }) { return <div className="empty">{text}</div>; }
 function Modal({ title, children, onClose }) { return <div className="modal-backdrop" onMouseDown={onClose}><div className="modal" onMouseDown={(e) => e.stopPropagation()}><div className="modal-head"><h2>{title}</h2><button onClick={onClose}>×</button></div>{children}</div></div>; }
 
 const styles = `
-.pregnancy-page{--ink:#24323a;--muted:#71808a;--line:#e5e9e7;--soft:#f5f7f5;--accent:#6c8d84;--accent-dark:#4d7168;--cream:#faf9f5;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:#fff;min-height:100vh;padding:30px;box-sizing:border-box}.pregnancy-page *{box-sizing:border-box}.pregnancy-header{max-width:1180px;margin:0 auto 22px;display:flex;justify-content:space-between;gap:20px;align-items:flex-end}.eyebrow,.small-label{font-size:11px;letter-spacing:.16em;font-weight:800;color:#82908c}.pregnancy-header h1{font-size:38px;line-height:1.08;margin:8px 0}.pregnancy-header p,.muted{color:var(--muted);margin:0;line-height:1.6}.outline-btn,.soft-btn,.week-actions button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:11px 16px;color:var(--ink);cursor:pointer}.pregnancy-nav{max-width:1180px;margin:0 auto 28px;display:flex;gap:6px;overflow:auto;padding-bottom:4px}.pregnancy-nav button{white-space:nowrap;border:0;background:transparent;padding:10px 12px;border-radius:12px;color:var(--muted);cursor:pointer;font-weight:650}.pregnancy-nav button.active{background:var(--soft);color:var(--accent-dark)}.pregnancy-nav span{margin-right:6px}.hero-grid,.two-column,.tracking-grid,.info-grid,.stats-grid{max-width:1180px;margin:0 auto;display:grid;gap:16px}.hero-grid{grid-template-columns:1.6fr .8fr}.hero-card,.due-card,.panel,.baby-card,.ask-panel,.safety-box,.standalone{border:1px solid var(--line);border-radius:24px;background:#fff}.hero-card{padding:32px;background:var(--cream)}.hero-card h2{font-size:31px;margin:10px 0 8px;max-width:650px}.hero-card p{color:var(--muted);line-height:1.65;max-width:650px}.progress-track{height:9px;background:#e6ebe8;border-radius:99px;margin:26px 0 8px;overflow:hidden}.progress-track div{height:100%;background:var(--accent);border-radius:99px}.progress-meta{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}.hero-actions{display:flex;gap:10px;margin-top:22px}.primary-btn{border:0;background:var(--accent-dark);color:#fff;border-radius:12px;padding:12px 18px;font-weight:750;cursor:pointer}.due-card{padding:28px;display:flex;align-items:center;gap:22px}.circle-progress{width:122px;height:122px;border-radius:50%;border:8px solid #e7eeeb;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none}.circle-progress strong{font-size:23px}.circle-progress span{font-size:11px;color:var(--muted)}.due-card h3{margin:8px 0 5px;font-size:23px}.due-card p{color:var(--muted);margin:0}.section-block{max-width:1180px;margin:26px auto}.section-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:14px}.section-heading h2,.standalone h2{font-size:26px;margin:5px 0}.text-btn{border:0;background:none;color:var(--accent-dark);font-weight:750;cursor:pointer}.baby-card{padding:26px;display:grid;grid-template-columns:210px 1fr;gap:28px;align-items:center}.baby-card.large{max-width:900px}.baby-visual{min-height:180px;border-radius:20px;background:var(--soft);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.baby-visual span{font-size:58px;color:var(--accent)}.baby-visual small{color:var(--muted)}.baby-visual strong{font-size:23px;margin-top:4px}.week-pill,.date-pill{display:inline-block;padding:7px 10px;border-radius:99px;background:var(--soft);font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--accent-dark)}.baby-card h3{font-size:22px;margin:12px 0 7px}.baby-card p,.info-card p,.article-card p{color:var(--muted);line-height:1.65}.mini-list{display:grid;gap:8px;color:#52635d;font-size:14px}.tracking-grid{grid-template-columns:repeat(4,1fr)}.track-card{border:1px solid var(--line);background:#fff;border-radius:18px;padding:18px;text-align:left;display:flex;align-items:center;gap:12px;cursor:pointer}.track-icon{width:40px;height:40px;border-radius:12px;background:var(--soft);display:grid;place-items:center;font-size:18px}.track-card span:nth-child(2){display:grid;gap:4px;flex:1}.track-card small{color:var(--muted)}.track-card b{font-size:20px;color:var(--accent)}.two-column{grid-template-columns:1.1fr .9fr}.panel{padding:24px}.timeline{display:grid;gap:15px}.timeline-item{display:flex;gap:13px;align-items:flex-start}.timeline-item>span{width:28px;height:28px;border-radius:50%;background:var(--soft);display:grid;place-items:center;color:#87928f;font-size:12px}.timeline-item.done>span,.timeline-item.current>span{background:#e2ece8;color:var(--accent-dark)}.timeline-item.current strong{color:var(--accent-dark)}.timeline-item div{display:grid;gap:3px}.timeline-item small{color:var(--muted)}.companion{background:var(--cream)}.suggestions{display:grid;gap:8px;margin-top:18px}.suggestions button{border:0;background:#fff;border-radius:12px;padding:12px;text-align:left;color:var(--accent-dark);cursor:pointer}.ask-panel{padding:26px}.ask-box{display:flex;gap:10px;margin-top:18px}.ask-box input{flex:1;border:1px solid var(--line);border-radius:12px;padding:13px 14px;font:inherit}.answer{margin-top:14px;padding:15px;border-radius:14px;background:var(--soft);color:#52635d;line-height:1.6}.safety-box{max-width:1180px;margin:26px auto;padding:24px;background:#faf8f4;display:flex;justify-content:space-between;gap:20px;align-items:center}.safety-box h2{margin:6px 0}.safety-box p{color:var(--muted);line-height:1.6;max-width:780px}.standalone{padding:28px}.week-select{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}.week-hero{display:flex;gap:24px;align-items:center;padding:24px;border-radius:20px;background:var(--cream);margin-bottom:18px}.week-number{width:90px;height:90px;border-radius:22px;background:#fff;display:grid;place-items:center;font-size:34px;font-weight:800;color:var(--accent-dark)}.info-grid{grid-template-columns:repeat(2,1fr)}.info-card{border:1px solid var(--line);border-radius:18px;padding:20px}.info-card h3{margin:0 0 8px}.week-actions{display:flex;justify-content:center;gap:10px;margin-top:22px}.week-actions button:disabled{opacity:.4;cursor:not-allowed}.notice,.form-note{margin-top:18px;padding:14px 16px;border-radius:14px;background:#f7f8f6;color:#65736e;line-height:1.55;font-size:13px}.entry-list{display:grid;gap:10px}.entry{border:1px solid var(--line);border-radius:15px;padding:16px;display:flex;justify-content:space-between;gap:15px;align-items:flex-start}.entry>div{min-width:0}.entry strong,.entry small{display:block}.entry small{color:var(--muted);margin-top:4px}.entry p{color:#596963;line-height:1.55;margin:8px 0 0}.delete-btn{border:0;background:transparent;color:#9a5d5d;cursor:pointer}.empty{padding:35px;text-align:center;border:1px dashed var(--line);border-radius:16px;color:var(--muted)}.kick-card,.timer-card{text-align:center;border:1px solid var(--line);border-radius:22px;padding:30px;background:var(--cream);max-width:600px;margin:0 auto 18px}.kick-count{font-size:56px;font-weight:800}.kick-card>span{display:block;color:var(--muted);margin-bottom:18px}.kick-btn{width:150px;height:150px;border-radius:50%;border:0;background:#fff;box-shadow:0 8px 28px rgba(40,60,55,.08);font-size:20px;font-weight:800;color:var(--accent-dark);cursor:pointer}.reset-link{display:block;margin:15px auto 0;border:0;background:none;color:var(--muted);cursor:pointer}.timer{font-size:62px;font-variant-numeric:tabular-nums;font-weight:800;margin-bottom:20px}.timer-card p{color:var(--muted)}.stats-grid{grid-template-columns:repeat(3,1fr);margin:18px auto;max-width:700px}.stat{border:1px solid var(--line);border-radius:16px;padding:17px;text-align:center}.stat small,.stat strong{display:block}.stat small{color:var(--muted)}.stat strong{font-size:22px;margin-top:6px}.check-group{margin-top:22px}.check-group h3{font-size:17px}.check-item{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:14px;margin:8px 0;cursor:pointer}.check-item input{width:18px;height:18px}.check-item.checked span{text-decoration:line-through;color:var(--muted)}.birth-form{max-width:900px;margin:20px 0}.article-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.article-card{border:1px solid var(--line);border-radius:18px;padding:20px}.article-card>span{font-size:10px;letter-spacing:.12em;font-weight:800;color:var(--accent)}.article-card h3{margin:10px 0 7px}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.form-grid label{display:grid;gap:7px;font-size:13px;font-weight:700;color:#51615c}.form-grid .full{grid-column:1/-1}.form-grid input,.form-grid select,.form-grid textarea{width:100%;border:1px solid var(--line);border-radius:11px;padding:11px 12px;font:inherit;font-weight:400;color:var(--ink);background:#fff}.form-grid textarea{min-height:95px;resize:vertical}.modal-backdrop{position:fixed;inset:0;background:rgba(20,30,28,.38);display:grid;place-items:center;padding:20px;z-index:50}.modal{width:min(620px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:22px;padding:22px}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.modal-head h2{margin:0}.modal-head button{border:0;background:var(--soft);border-radius:10px;width:34px;height:34px;font-size:22px;cursor:pointer}
-@media(max-width:900px){.pregnancy-page{padding:18px}.pregnancy-header{display:block}.pregnancy-header .outline-btn{margin-top:15px}.hero-grid,.two-column,.info-grid,.article-grid{grid-template-columns:1fr}.tracking-grid{grid-template-columns:repeat(2,1fr)}.baby-card{grid-template-columns:1fr}.safety-box{display:block}.safety-box .outline-btn{margin-top:10px}.pregnancy-nav{margin-bottom:18px}.hero-card h2{font-size:26px}}
-@media(max-width:600px){.tracking-grid,.stats-grid,.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}.hero-card,.due-card,.panel,.baby-card,.ask-panel,.safety-box,.standalone{border-radius:18px}.hero-actions,.ask-box,.week-actions{flex-direction:column}.week-actions button{width:100%}.week-hero{align-items:flex-start}.week-number{width:70px;height:70px;font-size:26px;flex:none}.circle-progress{width:90px;height:90px}.due-card{padding:20px}.pregnancy-header h1{font-size:30px}}
+.pregnancy-page{--ink:#24323a;--muted:#71808a;--line:#e5e9e7;--soft:#f5f7f5;--accent:#6c8d84;--accent-dark:#4d7168;--cream:#faf9f5;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:#fff;min-height:100vh;padding:30px;box-sizing:border-box}.pregnancy-page *{box-sizing:border-box}.pregnancy-header{max-width:1180px;margin:0 auto 22px;display:flex;justify-content:space-between;gap:20px;align-items:flex-end}.eyebrow,.small-label{font-size:11px;letter-spacing:.16em;font-weight:800;color:#82908c}.pregnancy-header h1{font-size:38px;line-height:1.08;margin:8px 0}.pregnancy-header p,.muted{color:var(--muted);margin:0;line-height:1.6}.outline-btn,.soft-btn,.week-actions button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:11px 16px;color:var(--ink);cursor:pointer}.pregnancy-nav-shell{max-width:1180px;margin:0 auto 28px;display:flex;align-items:center;gap:10px;min-width:0}
+.pregnancy-nav{flex:1;min-width:0;display:flex;gap:6px;overflow-x:auto;overflow-y:hidden;padding:4px 0;scrollbar-width:none;-ms-overflow-style:none;scroll-behavior:smooth}
+.pregnancy-nav::-webkit-scrollbar{display:none}
+.pregnancy-nav button{flex:0 0 auto;white-space:nowrap;border:0;background:transparent;padding:10px 12px;border-radius:12px;color:var(--muted);cursor:pointer;font-weight:650}
+.pregnancy-nav button.active{background:var(--soft);color:var(--accent-dark)}
+.pregnancy-nav span{margin-right:6px}
+.pregnancy-nav-arrow{width:36px;height:36px;flex:0 0 36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:50%;background:#fff;color:var(--accent-dark);cursor:pointer;transition:background .2s,opacity .2s}
+.pregnancy-nav-arrow:hover:not(:disabled){background:var(--soft)}
+.pregnancy-nav-arrow:disabled{opacity:.3;cursor:not-allowed}
+.pregnancy-section-switcher{max-width:1180px;margin:-12px auto 24px;display:flex;align-items:center;justify-content:center;gap:18px}
+.pregnancy-section-switcher-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--line);background:#fff;color:var(--accent-dark);border-radius:999px;padding:8px 13px;font:inherit;font-size:13px;font-weight:650;cursor:pointer;transition:background .2s,opacity .2s}
+.pregnancy-section-switcher-btn:hover:not(:disabled){background:var(--soft)}
+.pregnancy-section-switcher-btn:disabled{opacity:.35;cursor:not-allowed}
+.pregnancy-section-current{min-width:120px;text-align:center;color:var(--accent-dark);font-size:14px;font-weight:750}
+@media(max-width:600px){.pregnancy-section-switcher{gap:10px;margin-top:-8px}.pregnancy-section-switcher-btn{padding:8px 10px;font-size:12px}.pregnancy-section-current{min-width:0;max-width:145px;font-size:13px}}
+.hero-grid,.two-column,.tracking-grid,.info-grid,.stats-grid{max-width:1180px;margin:0 auto;display:grid;gap:16px}.hero-grid{grid-template-columns:1.6fr .8fr}.hero-card,.due-card,.panel,.baby-card,.ask-panel,.safety-box,.standalone{border:1px solid var(--line);border-radius:24px;background:#fff}.hero-card{padding:32px;background:var(--cream)}.hero-card h2{font-size:31px;margin:10px 0 8px;max-width:650px}.hero-card p{color:var(--muted);line-height:1.65;max-width:650px}.progress-track{height:9px;background:#e6ebe8;border-radius:99px;margin:26px 0 8px;overflow:hidden}.progress-track div{height:100%;background:var(--accent);border-radius:99px}.progress-meta{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}.hero-actions{display:flex;gap:10px;margin-top:22px}.primary-btn{border:0;background:var(--accent-dark);color:#fff;border-radius:12px;padding:12px 18px;font-weight:750;cursor:pointer}.due-card{padding:28px;display:flex;align-items:center;gap:22px}.circle-progress{width:122px;height:122px;border-radius:50%;border:8px solid #e7eeeb;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none}.circle-progress strong{font-size:23px}.circle-progress span{font-size:11px;color:var(--muted)}.due-card h3{margin:8px 0 5px;font-size:23px}.due-card p{color:var(--muted);margin:0}.section-block{max-width:1180px;margin:26px auto}.section-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:14px}.section-heading h2,.standalone h2{font-size:26px;margin:5px 0}.text-btn{border:0;background:none;color:var(--accent-dark);font-weight:750;cursor:pointer}.baby-card{padding:26px;display:grid;grid-template-columns:210px 1fr;gap:28px;align-items:center}.baby-card.large{max-width:900px}.baby-visual{min-height:180px;border-radius:20px;background:var(--soft);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.baby-visual span{font-size:58px;color:var(--accent)}.baby-visual small{color:var(--muted)}.baby-visual strong{font-size:23px;margin-top:4px}.week-pill,.date-pill{display:inline-block;padding:7px 10px;border-radius:99px;background:var(--soft);font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--accent-dark)}.baby-card h3{font-size:22px;margin:12px 0 7px}.baby-card p,.info-card p,.article-card p{color:var(--muted);line-height:1.65}.mini-list{display:grid;gap:8px;color:#52635d;font-size:14px}.tracking-grid{grid-template-columns:repeat(4,1fr)}.track-card{border:1px solid var(--line);background:#fff;border-radius:18px;padding:18px;text-align:left;display:flex;align-items:center;gap:12px;cursor:pointer}.track-icon{width:40px;height:40px;border-radius:12px;background:var(--soft);display:grid;place-items:center;font-size:18px}.track-card span:nth-child(2){display:grid;gap:4px;flex:1}.track-card small{color:var(--muted)}.track-card b{font-size:20px;color:var(--accent)}.two-column{grid-template-columns:1.1fr .9fr}.panel{padding:24px}.timeline{display:grid;gap:15px}.timeline-item{display:flex;gap:13px;align-items:flex-start}.timeline-item>span{width:28px;height:28px;border-radius:50%;background:var(--soft);display:grid;place-items:center;color:#87928f;font-size:12px}.timeline-item.done>span,.timeline-item.current>span{background:#e2ece8;color:var(--accent-dark)}.timeline-item.current strong{color:var(--accent-dark)}.timeline-item div{display:grid;gap:3px}.timeline-item small{color:var(--muted)}.companion{background:var(--cream)}.suggestions{display:grid;gap:8px;margin-top:18px}.suggestions button{border:0;background:#fff;border-radius:12px;padding:12px;text-align:left;color:var(--accent-dark);cursor:pointer}.ask-panel{padding:26px}.ask-box{display:flex;gap:10px;margin-top:18px}.ask-box input{flex:1;border:1px solid var(--line);border-radius:12px;padding:13px 14px;font:inherit}.answer{margin-top:14px;padding:15px;border-radius:14px;background:var(--soft);color:#52635d;line-height:1.6}.safety-box{max-width:1180px;margin:26px auto;padding:24px;background:#faf8f4;display:flex;justify-content:space-between;gap:20px;align-items:center}.safety-box h2{margin:6px 0}.safety-box p{color:var(--muted);line-height:1.6;max-width:780px}.standalone{padding:28px}.week-select{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}.week-hero{display:flex;gap:24px;align-items:center;padding:24px;border-radius:20px;background:var(--cream);margin-bottom:18px}.week-number{width:90px;height:90px;border-radius:22px;background:#fff;display:grid;place-items:center;font-size:34px;font-weight:800;color:var(--accent-dark)}.info-grid{grid-template-columns:repeat(2,1fr)}.info-card{border:1px solid var(--line);border-radius:18px;padding:20px}.info-card h3{margin:0 0 8px}.week-actions{display:flex;justify-content:center;gap:10px;margin-top:22px}.week-actions button:disabled{opacity:.4;cursor:not-allowed}.notice,.form-note{margin-top:18px;padding:14px 16px;border-radius:14px;background:#f7f8f6;color:#65736e;line-height:1.55;font-size:13px}.entry-list{display:grid;gap:10px}.entry{border:1px solid var(--line);border-radius:15px;padding:16px;display:flex;justify-content:space-between;gap:15px;align-items:flex-start}.entry>div{min-width:0}.entry strong,.entry small{display:block}.entry small{color:var(--muted);margin-top:4px}.entry p{color:#596963;line-height:1.55;margin:8px 0 0}.delete-btn{border:0;background:transparent;color:#9a5d5d;cursor:pointer}.empty{padding:35px;text-align:center;border:1px dashed var(--line);border-radius:16px;color:var(--muted)}.kick-card,.timer-card{text-align:center;border:1px solid var(--line);border-radius:22px;padding:30px;background:var(--cream);max-width:600px;margin:0 auto 18px}.kick-count{font-size:56px;font-weight:800}.kick-card>span{display:block;color:var(--muted);margin-bottom:18px}.kick-btn{width:150px;height:150px;border-radius:50%;border:0;background:#fff;box-shadow:0 8px 28px rgba(40,60,55,.08);font-size:20px;font-weight:800;color:var(--accent-dark);cursor:pointer}.reset-link{display:block;margin:15px auto 0;border:0;background:none;color:var(--muted);cursor:pointer}.timer{font-size:62px;font-variant-numeric:tabular-nums;font-weight:800;margin-bottom:20px}.timer-card p{color:var(--muted)}.stats-grid{grid-template-columns:repeat(3,1fr);margin:18px auto;max-width:700px}.stat{border:1px solid var(--line);border-radius:16px;padding:17px;text-align:center}.stat small,.stat strong{display:block}.stat small{color:var(--muted)}.stat strong{font-size:22px;margin-top:6px}.check-group{margin-top:22px}.check-group h3{font-size:17px}.check-item{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:14px;margin:8px 0;cursor:pointer}.check-item input{width:18px;height:18px}.check-item.checked span{text-decoration:line-through;color:var(--muted)}.birth-form{max-width:900px;margin:20px 0}.article-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.article-card{border:1px solid var(--line);border-radius:18px;padding:20px}.article-card>span{font-size:10px;letter-spacing:.12em;font-weight:800;color:var(--accent)}.article-card h3{margin:10px 0 7px}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.form-grid label{display:grid;gap:7px;font-size:13px;font-weight:700;color:#51615c}.form-grid .full{grid-column:1/-1}.form-grid input,.form-grid select,.form-grid textarea{width:100%;border:1px solid var(--line);border-radius:11px;padding:11px 12px;font:inherit;font-weight:400;color:var(--ink);background:#fff}.form-grid textarea{min-height:95px;resize:vertical}.modal-backdrop{position:fixed;inset:0;background:rgba(20,30,28,.38);display:grid;place-items:center;padding:20px;z-index:50}.modal{width:min(620px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:22px;padding:22px}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.modal-head h2{margin:0}.modal-head button{border:0;background:var(--soft);border-radius:10px;width:34px;height:34px;font-size:22px;cursor:pointer}
+@media(max-width:900px){.pregnancy-page{padding:18px}.pregnancy-header{display:block}.pregnancy-header .outline-btn{margin-top:15px}.hero-grid,.two-column,.info-grid,.article-grid{grid-template-columns:1fr}.tracking-grid{grid-template-columns:repeat(2,1fr)}.baby-card{grid-template-columns:1fr}.safety-box{display:block}.safety-box .outline-btn{margin-top:10px}.pregnancy-nav-shell{margin-bottom:18px}.hero-card h2{font-size:26px}}
+@media(max-width:600px){.pregnancy-nav-shell{gap:5px}.pregnancy-nav-arrow{width:32px;height:32px;flex-basis:32px}.pregnancy-nav button{padding:10px 9px;font-size:13px}.tracking-grid,.stats-grid,.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}.hero-card,.due-card,.panel,.baby-card,.ask-panel,.safety-box,.standalone{border-radius:18px}.hero-actions,.ask-box,.week-actions{flex-direction:column}.week-actions button{width:100%}.week-hero{align-items:flex-start}.week-number{width:70px;height:70px;font-size:26px;flex:none}.circle-progress{width:90px;height:90px}.due-card{padding:20px}.pregnancy-header h1{font-size:30px}}
 `;
